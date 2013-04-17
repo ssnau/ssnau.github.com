@@ -74,10 +74,8 @@ function f() {
     <button js-validate id="validate" class="btn btn-large btn-block btn-primary" type="button">Click here to Validate!</button>
   </div>
   <div id="result">
-    <div ng-repeat="err in errors" >
-      <div class='alert alert-error fade in' ng-click="jump(err.lineNumber, err.column)">
-        {{err.description}}({{"Line: " + err.lineNumber + ", Colum: " + err.column}})
-      </div>
+    <div ng-repeat="err in errors" class='alert alert-error fade in' ng-click="jump(err.lineNumber, err.column)">
+      {{err.description}}({{"Line: " + err.lineNumber + ", Colum: " + err.column}})
     </div>
     <div ng-show="success" class='alert alert-success fade in'>
       Code is syntatically valid.
