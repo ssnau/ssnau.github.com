@@ -90,18 +90,15 @@ function f() {
 </script>
 <script>
 $(function(){
-  var $editor = $("#editor");
-  var $window = $(window);
-  var $panel  = $("#panel");
+  var $editor = $("#editor"),
+      $window = $(window),
+      $panel  = $("#panel");
   $window.resize(function(e){
-     var window_w = $window.width();
-     if (window_w < 800) {
-        $editor.css('width', "500px");
-        $panel.css('left', "500px");
-     } else {
-        $editor.css('width', (window_w - 300) + 'px');
-        $panel.css('left', (window_w - 300) + 'px');
-     }
+    var window_w = $window.width(),
+        editorWidth = window_w < 800 ? "500px" : (window_w - 300) + 'px';
+
+    $editor.css('width', editorWidth);
+    $panel.css('left', editorWidth);
   });
   $window.resize();
 });
@@ -125,7 +122,7 @@ angular.module("app", [])
         var res = null, errors = [];
         try {
           res = esprima.parse(source, { tolerant: true, loc: true, allowTrailingComma: false });
-          errors = res.errors;
+          errors = res.errors || [];
         } catch(e) {
           errors = [e];
         }
