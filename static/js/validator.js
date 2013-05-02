@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 (function(){
+
 var browser =  [
     'clearInterval', 'clearTimeout', 'document', 'event', 'FormData',
     'frames', 'history', 'Image', 'localStorage', 'location', 'name',
