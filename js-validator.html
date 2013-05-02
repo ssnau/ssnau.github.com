@@ -3,6 +3,9 @@
 <head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="/static/js/esprima.min.js"></script>
+<script src="/static/js/estraverse.js"></script>
+<script src="/static/js/escope.js"></script>
+<script src="/static/js/esrefactor.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
 <!-- bootstrap -->
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
@@ -36,9 +39,15 @@
   margin-top:10px;
 }
 .alert {padding-right:14px;}
-.alert-error {
+.alert-error,
+.alert-warn {
   margin-bottom: 5px;
   cursor:pointer;
+}
+.alert-warn {
+    background-color: rgb(255, 239, 207);
+    border-color: rgb(211, 211, 127);
+    color: rgb(119, 119, 48);
 }
 .alert-error:hover {
   opacity:.7;
@@ -63,6 +72,8 @@ function f() {
   // Trailing Comma
   var t = {x:1, y:3, }
 
+  // undeclared variable
+  force = 1000;
 }
 </div>
 
@@ -70,13 +81,18 @@ function f() {
 <div id="panel" ng-controller='ace'>
   <div id="settings">
   </div>
-  <div id="action">
+  <div id="action" style="display:none">
     <button js-validate id="validate" class="btn btn-large btn-block btn-primary" type="button">Click here to Validate!</button>
   </div>
   <div id="result">
     <div ng-repeat="err in errors" >
       <div class='alert alert-error fade in' ng-click="jump(err.lineNumber, err.column)">
         {{err.description}}({{"Line: " + err.lineNumber + ", Colum: " + err.column}})
+      </div>
+    </div>
+    <div ng-repeat="warn in warnings" >
+      <div class='alert alert-warn fade in' ng-click="jumpWarn(warn)">
+          {{warn.description}}({{"Line: " + warn.lineNumber + ", Colum: " + warn.column}})
       </div>
     </div>
     <div ng-show="success" class='alert alert-success fade in'>
@@ -105,46 +121,7 @@ $(function(){
   });
   $window.resize();
 });
-
-angular.module("app", [])
-
-.directive("jsValidate", function(){
-  return {
-    link: function(scope, element, attr) {
-      var timer = null;
-      editor.getSession().on('change', function(){
-        timer && clearTimeout(timer);
-        timer = setTimeout(validate, 200);
-      });
-
-      element.click(validate);
-      setTimeout(validate, 1);//make the function call out of the context, so that scope.apply can be ok.
-
-      function validate(e){
-        var source = editor.getSession().getValue();
-        var res = null, errors = [];
-        try {
-          res = esprima.parse(source, { tolerant: true, loc: true, allowTrailingComma: false });
-          errors = res.errors || [];
-        } catch(e) {
-          errors = [e];
-        }
-        scope.$apply(function(){
-          scope.errors = errors;
-          scope.success = !errors.length;
-        });
-      }
-    }
-
-  }
-})
-
-.controller("ace", function($scope){
-  $scope.jump = function(line, col) {
-    editor.getSession().getSelection().selectionLead.setPosition(line - 1, col);
-    editor.getSession().getSelection().clearSelection();
-  }
-});
 </script>
+<script type="text/javascript" src="static/js/validator.js"></script>
 </body>
 </html>

@@ -166,11 +166,14 @@ StaticServlet.prototype.sendRedirect_ = function(req, res, redirectUrl) {
 
 StaticServlet.prototype.sendFile_ = function(req, res, path) {
   var self = this;
-  var file = fs.createReadStream(path);
   res.writeHead(200, {
     'Content-Type': StaticServlet.
-      MimeMap[path.split('.').pop()] || 'text/plain'
+        MimeMap[path.split('.').pop()] || 'text/plain'
   });
+  /* There some cache shit with ReadStream */
+  /*
+  var file = fs.createReadStream(path);
+
   if (req.method === 'HEAD') {
     res.end();
   } else {
@@ -182,6 +185,13 @@ StaticServlet.prototype.sendFile_ = function(req, res, path) {
       self.sendError_(req, res, error);
     });
   }
+  */
+
+  fs.readFile(path, function (err, data) {
+    if (err) self.sendError_(req, res, err);;
+    res.write(data);
+    res.end();
+  });
 };
 
 StaticServlet.prototype.sendDirectory_ = function(req, res, path) {
