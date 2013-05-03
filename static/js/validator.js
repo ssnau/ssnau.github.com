@@ -3,7 +3,6 @@
  * User: Liu Xijin
  * Date: 5/2/13
  * Time: 11:13 PM
- * To change this template use File | Settings | File Templates.
  */
 (function(){
 
@@ -30,7 +29,11 @@ var browser =  [
 ],  windows = [
     'ActiveXObject', 'CScript', 'Debug', 'Enumerator', 'System',
     'VBArray', 'WScript', 'WSH'
+
+], mstr = ['mstr', 'mstrmojo', 'microstrategy', 'mstrConfig' , 'mstrApp'
 ], user_global = [];
+
+
 angular.module("app", [])
 
 .directive("jsValidate", function(){
@@ -59,9 +62,10 @@ angular.module("app", [])
                 errors = [e];
             }
 
+
             if (!errors.length) { //只有当错误数量为0时，才执行scope检查
                 scopeManager = escope.analyze(res, {
-                    globals: [].concat(browser, node, rhino, standard, windows, user_global)
+                    globals: [].concat(browser, node, rhino, standard, windows, mstr, user_global)
                 });
                 console.log(scopeManager.scopes);
                 scopeManager.scopes.forEach(function(scope){
