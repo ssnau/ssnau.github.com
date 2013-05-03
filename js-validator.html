@@ -61,19 +61,19 @@
 return 42; // Return statement not inside a function
 
 function f() {
-  'use strict';
+'use strict';
 
-  // No more octal
-  var x = 042;
+// No more octal
+var x = 042;
 
-  // Duplicate property
-  var y = { x: 1, x: 2 };
+// Duplicate property
+var y = { x: 1, x: 2 };
 
-  // Trailing Comma
-  var t = {x:1, y:3, }
+// Trailing Comma
+var t = {x:1, y:3, }
 
-  // undeclared variable
-  force = 1000;
+// undeclared variable
+force = 1000;
 }
 </div>
 
@@ -91,8 +91,8 @@ function f() {
       </div>
     </div>
     <div ng-repeat="warn in warnings" >
-      <div class='alert alert-warn fade in' ng-click="jumpWarn(warn)">
-          {{warn.description}}({{"Line: " + warn.lineNumber + ", Colum: " + warn.column}})
+      <div class='alert alert-warn fade in' ng-click="jumpVar(warn)">
+          {{warn.description}}({{"Line: " + warn.lineNumber + ", Colum: " + warn.column}}) &nbsp;&nbsp;<a ng-click="addVar(warn.name)">add "{{warn.name}}" to global</a>
       </div>
     </div>
     <div ng-show="success" class='alert alert-success fade in'>
