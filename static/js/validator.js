@@ -10,7 +10,8 @@ var browser =  [
     'clearInterval', 'clearTimeout', 'document', 'event', 'FormData',
     'frames', 'history', 'Image', 'localStorage', 'location', 'name',
     'navigator', 'Option', 'parent', 'screen', 'sessionStorage', 'self',
-    'setInterval', 'setTimeout', 'Storage', 'window', 'XMLHttpRequest'
+    'setInterval', 'setTimeout', 'Storage', 'window', 'XMLHttpRequest',
+    'alert', 
 ],  node = [
     'Buffer', 'clearInterval', 'clearTimeout', 'console', 'exports',
     'global', 'module', 'process', 'querystring', 'require',
