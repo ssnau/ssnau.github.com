@@ -531,16 +531,18 @@
                 case Syntax.BreakStatement:
                     break;
 
-                case Syntax.CallExpression:
+	                case Syntax.CallExpression:
                     currentScope.__referencing(node.callee);
                     for (i = 0, iz = node['arguments'].length; i < iz; ++i) {
                         currentScope.__referencing(node['arguments'][i]);
                     }
 
                     // check this is direct call to eval
+	                /* ssnau: Never deal with eval statement
                     if (node.callee.type === Syntax.Identifier && node.callee.name === 'eval') {
                         currentScope.variableScope.__detectEval();
                     }
+                    */
                     break;
 
                 case Syntax.CatchClause:

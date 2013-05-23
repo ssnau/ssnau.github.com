@@ -189,7 +189,6 @@ StaticServlet.prototype.sendFile_ = function(req, res, path) {
 
     var data = fs.existsSync(path) && fs.readFileSync(path);
     res.write(data);
-    if (/html$/.test(path)) console.log(data+'');
     res.end();
 
 };

@@ -93,11 +93,13 @@ angular.module("app", [])
     $scope.jump = function(line, col) {
         editor.getSession().getSelection().selectionLead.setPosition(line - 1, col);
         editor.getSession().getSelection().clearSelection();
+	      editor.centerSelection(); //Attempts to center the current selection on the screen
     };
     $scope.jumpVar = function(warn) {
         editor.getSession().getSelection().clearSelection();
         editor.getSession().getSelection().selectionLead.setPosition(warn.lineNumber - 1, warn.column);
         editor.getSession().getSelection().selectTo(warn.endLineNumber - 1, warn.endColumn);
+	      editor.centerSelection(); //Attempts to center the current selection on the screen
     };
     $scope.addVar = function(varName) {
         user_global.push(varName);
